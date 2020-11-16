@@ -1,0 +1,108 @@
+ma = Map();
+ma.put("select_query","select Campaign_Name FROM Campaigns where Status = Active");
+response1 = invokeurl
+[
+	url :"https://www.zohoapis.in/crm/v2/coql"
+	type :POST
+	parameters:ma.tostring()
+	headers:header1
+];
+info response1;
+campaign_list = response1.get("data");
+if(campaign_list != null)
+{
+	for each  campaign in campaign_list
+	{
+		hr_amt_won_opp = 0;
+		hr_no_of_cont = 0;
+		hr_no_of_won_opp = 0;
+		amt_won_opp = 0;
+		no_of_won_opp = 0;
+		no_of_opp = 0;
+		hr_no_of_opp = 0;
+		amt_all_opp = 0;
+		hr_amt_all_opp = 0;
+		limit = 1;
+		offset = 0;
+		campaign_name = campaign.getJSON("Campaign_Name");
+		campaign_id = campaign.getJSON("id");
+		if(campaign_name != null && campaign_id != null)
+		{
+			num_list = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110};
+			for each  num in num_list
+			{
+				new = {"select_query":"select Deal_Name,Probability FROM Deals where Campaign_Source.Campaign_Name='" + campaign_name + "' limit " + offset + "," + limit};
+				sel = invokeurl
+				[
+					url :"https://www.zohoapis.in/crm/v2/coql"
+					type :POST
+					parameters:new.tostring()
+					headers:header1
+				];
+				opp_list = sel.get("data");
+				if(opp_list != null)
+				{
+					for each  rec in opp_list
+					{
+						id1 = rec.get("id");
+						if(id1 != null)
+						{
+							opp = zoho.crm.getRecordById("Deals",id1);
+							Amount = opp.getJSON("Amount");
+							probability = opp.getJSON("Probability");
+							if(probability != null && Amount != null && probability == 100)
+							{
+								hr_amt_won_opp = hr_amt_won_opp + Amount;
+								hr_no_of_cont = hr_no_of_cont + 1;
+								hr_no_of_won_opp = hr_no_of_won_opp + 1;
+								amt_won_opp = hr_amt_won_opp;
+								no_of_won_opp = hr_no_of_won_opp;
+								amt_all_opp = amt_all_opp + Amount;
+								hr_amt_all_opp = hr_amt_all_opp + Amount;
+								no_of_opp = no_of_opp + 1;
+								hr_no_of_opp = hr_no_of_opp + 1;
+							}
+							else
+							{
+								hr_no_of_cont = hr_no_of_cont + 1;
+								amt_all_opp = amt_all_opp + Amount;
+								hr_amt_all_opp = hr_amt_all_opp + Amount;
+								no_of_opp = no_of_opp + 1;
+								hr_no_of_opp = hr_no_of_opp + 1;
+							}
+						}
+					}
+				}
+				offset = offset + limit;
+				if(sel.get("data").size() < limit)
+				{
+					break;
+				}
+			}
+			cmap = Map();
+			cmap.put("Hierarchy_Amount_won_Opportunities",hr_amt_won_opp);
+			cmap.put("Number_of_won_Opportunities",no_of_won_opp);
+			cmap.put("Hierarchy_Number_Of_Contacts",hr_no_of_cont);
+			cmap.put("Hierarchy_Number_Of_won_Opportunities",hr_no_of_won_opp);
+			cmap.put("Amount_won_Opportunities",amt_won_opp);
+			cmap.put("Hierarchy_Amount_all_Opportunities",hr_amt_all_opp);
+			cmap.put("Number_of_Opportunities",no_of_opp);
+			cmap.put("Hierarchy_Number_Of_Opportunities",hr_no_of_opp);
+			cmap.put("Amount_all_Opportunities",amt_all_opp);
+			// 			info cmap;
+			clist = list();
+			clist.add(cmap);
+			final = Map();
+			final.put("data",clist);
+			info final;
+			// 			update1 = invokeurl
+			//             [
+			//             	url: "https://www.zohoapis.in/crm/v2/Campaigns/campaign_id"
+			//             	type: PUT
+			//             	parameters: final.tostring()
+			//             	headers: header1
+			//             ];
+			// 			info update1;
+		}
+	}
+}

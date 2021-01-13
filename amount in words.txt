@@ -1,0 +1,183 @@
+ amount=391093;
+word = " ";
+m = {"twenty","thirty","forty","fifty","sixty","seventy","eighty","ninty"};
+y = {2,3,4,5,6,7,8,9};
+k = {"one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"};
+z = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19};
+if(amount / 100000 > 0)
+{
+	r = amount / 100000;
+	amount = amount % 100000;
+	count = 0;
+	r = r.floor();
+	for each  i in z
+	{
+		if(i == r && amount > 0)
+		{
+			word = word + k.get(count) + " lakh ";
+			break;
+		}
+		else if(i == r && amount == 0 && i > 1)
+		{
+			word = word + k.get(count) + " lakhs only";
+			break;
+		}
+		else if(i == r && amount == 0 && i == 1)
+		{
+			word = word + k.get(count) + " lakh only";
+			break;
+		}
+		count = count + 1;
+	}
+}
+if(amount / 1000 > 0)
+{
+	r = amount / 1000;
+	r = r.floor();
+	amount = amount % 1000;
+	if(r <= 19)
+	{
+		count = 0;
+		for each  i in z
+		{
+			if(i == r && amount > 0)
+			{
+				word = word + k.get(count) + " thousand ";
+			}
+			if(i == r && amount == 0)
+			{
+				word = word + k.get(count) + " thousand only";
+				break;
+			}
+			count = count + 1;
+		}
+	}
+	// 	r=54
+	else if(r > 19)
+	{
+		if(r % 10 == 0)
+		{
+			r = r / 10;
+			count = 0;
+			for each  j in y
+			{
+				if(r == j && amount == 0)
+				{
+					word = word + m.get(count) + " thousand only";
+					break;
+				}
+				else if(r == j && amount > 0)
+				{
+					word = word + k.get(count) + " thousand ";
+				}
+				count = count + 1;
+			}
+		}
+		else
+		{
+			// 			
+			t = (r / 10).floor();
+			count = 0;
+			for each  p in y
+			{
+				if(t == p)
+				{
+					word = word + m.get(count) + " ";
+				}
+				count = count + 1;
+			}
+			g = (r % 10).floor();
+			count = 0;
+			for each  w in z
+			{
+				if(g == w && amount == 0)
+				{
+					word = word + k.get(count) + " thousand only";
+				}
+				else if(g == w && amount > 0)
+				{
+					word = word + k.get(count) + " thousand ";
+				}
+				count = count + 1;
+			}
+		}
+	}
+}
+if(amount / 100 > 0)
+{
+	r = amount / 100;
+	r = r.floor();
+	amount = amount % 100;
+	if(r <= 9)
+	{
+		count = 0;
+		for each  i in z
+		{
+			if(i == r && amount > 0)
+			{
+				word = word + k.get(count) + " hundred ";
+			}
+			if(i == r && amount == 0)
+			{
+				word = word + k.get(count) + " hundred only";
+				break;
+			}
+			count = count + 1;
+		}
+	}
+}
+if(amount <= 19)
+{
+	count = 0;
+	for each  a in z
+	{
+		if(amount == a)
+		{
+			word = word + k.get(count) + " only";
+			break;
+		}
+		count = count + 1;
+	}
+}
+else if(amount > 19)
+{
+	r = amount % 10;
+	amount = amount / 10;
+	amount = amount.floor();
+	if(r == 0)
+	{
+		count = 0;
+		for each  b in y
+		{
+			if(b == amount)
+			{
+				word = word + m.get(count) + " only";
+				break;
+			}
+			count = count + 1;
+		}
+	}
+	else if(amount > 0)
+	{
+		count = 0;
+		for each  c in y
+		{
+			if(c == amount)
+			{
+				word = word + m.get(count) + " ";
+			}
+			count = count + 1;
+		}
+		count = 0;
+		for each  e in z
+		{
+			if(e == r)
+			{
+				word = word + k.get(count) + " only";
+				break;
+			}
+			count = count + 1;
+		}
+	}
+}
+info word;

@@ -1,30 +1,31 @@
- amount=391093;
+ amount =380010;
 word = " ";
-m = {"twenty","thirty","forty","fifty","sixty","seventy","eighty","ninty"};
+m = {"Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"};
 y = {2,3,4,5,6,7,8,9};
-k = {"one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"};
+k = {"One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"};
 z = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19};
-if(amount / 100000 > 0)
+if( amount / 100000 > 0)
 {
 	r = amount / 100000;
 	amount = amount % 100000;
+	
 	count = 0;
 	r = r.floor();
 	for each  i in z
 	{
 		if(i == r && amount > 0)
 		{
-			word = word + k.get(count) + " lakh ";
+			word = word + k.get(count) + " Lakh ";
 			break;
 		}
 		else if(i == r && amount == 0 && i > 1)
 		{
-			word = word + k.get(count) + " lakhs only";
+			word = word + k.get(count) + " Lakhs only";
 			break;
 		}
 		else if(i == r && amount == 0 && i == 1)
 		{
-			word = word + k.get(count) + " lakh only";
+			word = word + k.get(count) + " Lakh Only";
 			break;
 		}
 		count = count + 1;
@@ -35,6 +36,8 @@ if(amount / 1000 > 0)
 	r = amount / 1000;
 	r = r.floor();
 	amount = amount % 1000;
+	info amount;
+	info r;
 	if(r <= 19)
 	{
 		count = 0;
@@ -42,33 +45,38 @@ if(amount / 1000 > 0)
 		{
 			if(i == r && amount > 0)
 			{
-				word = word + k.get(count) + " thousand ";
+				word = word + k.get(count) + " Thousand ";
+				
 			}
 			if(i == r && amount == 0)
 			{
-				word = word + k.get(count) + " thousand only";
+				word = word + k.get(count) + " Thousand Only";
 				break;
 			}
 			count = count + 1;
 		}
 	}
-	// 	r=54
+
 	else if(r > 19)
 	{
+		info amount;
 		if(r % 10 == 0)
 		{
 			r = r / 10;
+			info r;
 			count = 0;
 			for each  j in y
 			{
+				info j;
 				if(r == j && amount == 0)
 				{
-					word = word + m.get(count) + " thousand only";
+					word = word + m.get(count) + " Thousand Only";
+					info word;
 					break;
 				}
 				else if(r == j && amount > 0)
 				{
-					word = word + k.get(count) + " thousand ";
+					word = word + m.get(count) + " Thousand ";
 				}
 				count = count + 1;
 			}
@@ -92,11 +100,11 @@ if(amount / 1000 > 0)
 			{
 				if(g == w && amount == 0)
 				{
-					word = word + k.get(count) + " thousand only";
+					word = word + k.get(count) + " Thousand Only";
 				}
 				else if(g == w && amount > 0)
 				{
-					word = word + k.get(count) + " thousand ";
+					word = word + k.get(count) + " Thousand ";
 				}
 				count = count + 1;
 			}
@@ -115,11 +123,11 @@ if(amount / 100 > 0)
 		{
 			if(i == r && amount > 0)
 			{
-				word = word + k.get(count) + " hundred ";
+				word = word + k.get(count) + " Hundred ";
 			}
 			if(i == r && amount == 0)
 			{
-				word = word + k.get(count) + " hundred only";
+				word = word + k.get(count) + " Hundred Only";
 				break;
 			}
 			count = count + 1;
@@ -133,7 +141,7 @@ if(amount <= 19)
 	{
 		if(amount == a)
 		{
-			word = word + k.get(count) + " only";
+			word = word + k.get(count) + " Only";
 			break;
 		}
 		count = count + 1;
@@ -151,7 +159,7 @@ else if(amount > 19)
 		{
 			if(b == amount)
 			{
-				word = word + m.get(count) + " only";
+				word = word + m.get(count) + " Only";
 				break;
 			}
 			count = count + 1;
@@ -173,7 +181,7 @@ else if(amount > 19)
 		{
 			if(e == r)
 			{
-				word = word + k.get(count) + " only";
+				word = word + k.get(count) + " Only";
 				break;
 			}
 			count = count + 1;

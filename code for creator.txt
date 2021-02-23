@@ -1,0 +1,342 @@
+
+Deal = zoho.crm.getRecordById("Deals",id);
+Contactid = Deal.get("Contact_Name").get("id");
+Contact = zoho.crm.getRecordById("Contacts",Contactid);
+contact_name = Contact.get("Full_Name");
+// contact_name = Contact.get("")
+Accountid = Deal.get("Account_Name").get("id");
+Account_name = Deal.get("Account_Name").get("name");
+Account = zoho.crm.getRecordById("Accounts",Accountid);
+Billed_From = Deal.get("Region");
+Product_Family = Deal.get("Product_Family");
+if(Billed_From == "Haryana")
+{
+	FRM = "HR";
+}
+else if(Billed_From == "Maharastra")
+{
+	FRM = "MH";
+}
+else if(Billed_From == "Karnataka")
+{
+	FRM = "KA";
+}
+else if(Billed_From == "Delhi")
+{
+	FRM = "DL";
+}
+else if(Product_Family == "CEO")
+{
+	ST = "CEO";
+}
+else if(Product_Family == "CFO")
+{
+	ST = "CFO";
+}
+else if(Product_Family == "CHRO")
+{
+	ST = "CHR";
+}
+else if(Product_Family == "CMO")
+{
+	ST = "CMO";
+}
+Year1 = zoho.currentdate.year();
+Year = Year1 - 2000;
+Quotation_Number = "QN/" + FRM + "/" + ST + "-Auto/" + Year;
+est = Map();
+est.put("Account",Accountid);
+est.put("Contact",Contactid);
+est.put("Account_Name",Account_name);
+
+est.put("Contact_Name",contact_name);
+est.put("Quotation_Number",Quotation_Number);
+est.put("Date_field",zoho.currentdate.toString("dd-MMM-yyyy"));
+if(Contact.get("Designation_11") != Null)
+{
+	aa = Contact.get("Designation_11").get("name");
+	est.put("Contact_Designation",aa);
+}
+est.put("Client_GST",Account.get("Billing_GST"));
+// est.put("Billed_From", Account.get("Region")) ;
+Client_GST = Account.get("Billing_GST");
+if(Account.get("Billing_GST") != Null)
+{
+	State_Code = 00;
+	Place_of_Supply = "";
+	State_Code = Client_GST.subtext(0,2);
+	if(State_Code == 01)
+	{
+		Place_of_Supply = "JAMMU AND KASHMIR";
+	}
+	else if(State_Code == 2)
+	{
+		Place_of_Supply = "HIMACHAL PRADESH";
+	}
+	else if(State_Code == 3)
+	{
+		Place_of_Supply = "PUNJAB";
+	}
+	else if(State_Code == 4)
+	{
+		Place_of_Supply = "CHANDIGARH";
+	}
+	else if(State_Code == 5)
+	{
+		Place_of_Supply = "UTTARAKHAND";
+	}
+	else if(State_Code == 6)
+	{
+		Place_of_Supply = "HARYANA";
+	}
+	else if(State_Code == 7)
+	{
+		Place_of_Supply = "DELHI";
+	}
+	else if(State_Code == 8)
+	{
+		Place_of_Supply = "RAJASTHAN";
+	}
+	else if(State_Code == 9)
+	{
+		Place_of_Supply = "UTTAR PRADESH";
+	}
+	else if(State_Code == 10)
+	{
+		Place_of_Supply = "BIHAR";
+	}
+	else if(State_Code == 11)
+	{
+		Place_of_Supply = "SIKKIM";
+	}
+	else if(State_Code == 12)
+	{
+		Place_of_Supply = "ARUNACHAL PRADESH";
+	}
+	else if(State_Code == 13)
+	{
+		Place_of_Supply = "NAGALAND";
+	}
+	else if(State_Code == 14)
+	{
+		Place_of_Supply = "MANIPUR";
+	}
+	else if(State_Code == 15)
+	{
+		Place_of_Supply = "MIZORAM";
+	}
+	else if(State_Code == 16)
+	{
+		Place_of_Supply = "TRIPURA";
+	}
+	else if(State_Code == 17)
+	{
+		Place_of_Supply = "MEGHLAYA";
+	}
+	else if(State_Code == 18)
+	{
+		Place_of_Supply = "ASSAM";
+	}
+	else if(State_Code == 19)
+	{
+		Place_of_Supply = "WEST BENGAL";
+	}
+	else if(State_Code == 20)
+	{
+		Place_of_Supply = "JHARKHAND";
+	}
+	else if(State_Code == 21)
+	{
+		Place_of_Supply = "ODISHA";
+	}
+	else if(State_Code == 22)
+	{
+		Place_of_Supply = "CHATTISGARH";
+	}
+	else if(State_Code == 23)
+	{
+		Place_of_Supply = "MADHYA PRADESH";
+	}
+	else if(State_Code == 24)
+	{
+		Place_of_Supply = "GUJARAT";
+	}
+	else if(State_Code == 26)
+	{
+		Place_of_Supply = "DADRA AND NAGAR HAVELI AND DAMAN AND DIU";
+	}
+	else if(State_Code == 27)
+	{
+		Place_of_Supply = "MAHARASHTRA";
+	}
+	else if(State_Code == 28)
+	{
+		Place_of_Supply = "ANDHRA PRADESH";
+	}
+	else if(State_Code == 29)
+	{
+		Place_of_Supply = "KARNATAKA";
+	}
+	else if(State_Code == 30)
+	{
+		Place_of_Supply = "GOA";
+	}
+	else if(State_Code == 31)
+	{
+		Place_of_Supply = "LAKSHWADEEP";
+	}
+	else if(State_Code == 32)
+	{
+		Place_of_Supply = "KERALA";
+	}
+	else if(State_Code == 33)
+	{
+		Place_of_Supply = "TAMIL NADU";
+	}
+	else if(State_Code == 34)
+	{
+		Place_of_Supply = "PUDUCHERRY";
+	}
+	else if(State_Code == 35)
+	{
+		Place_of_Supply = "ANDAMAN AND NICOBAR ISLANDS";
+	}
+	else if(State_Code == 36)
+	{
+		Place_of_Supply = "TELANGANA";
+	}
+	else if(State_Code == 37)
+	{
+		Place_of_Supply = "ANDHRA PRADESH";
+	}
+	else if(State_Code == 38)
+	{
+		Place_of_Supply = "LADAKH";
+	}
+}
+est.put("State_Code",State_Code);
+est.put("Place_of_Supply",Place_of_Supply);
+// est.put("Services",  );
+// est.put("Service_Type", );
+// est.put("Conference", );
+// est.put("Project_Report", );
+// est.put("Subscription_Period", );
+// est.put("Subscription_Type", );
+// est.put("Other_Details", );
+est.put("Invoice_Done",False);
+// est.put("Particular_Name",  );//Plan for a seperate field
+Date_field = zoho.currentdate.toString("dd-MMM-yyyy");
+Type_Product = Deal.get("Type_Product");
+if(Type_Product == "Subscriptions" || Type_Product == "Renewals" || Type_Product == "Forum sales")
+{
+	Date_Year = Date_field.getYear() - 2000;
+	Date_Year1 = Date_Year + 1;
+	Date_Month = Date_field.getMonth();
+	if(Date_Month == 1)
+	{
+		aa = "January " + Date_Year + " - December " + Date_Year;
+	}
+	else if(Date_Month == 2)
+	{
+		aa = "February " + Date_Year + " - January " + Date_Year1;
+	}
+	else if(Date_Month == 3)
+	{
+		aa = "March " + Date_Year + " - February " + Date_Year1;
+	}
+	else if(Date_Month == 4)
+	{
+		aa = "April " + Date_Year + " - March " + Date_Year1;
+	}
+	else if(Date_Month == 5)
+	{
+		aa = "May " + Date_Year + " - April " + Date_Year1;
+	}
+	else if(Date_Month == 6)
+	{
+		aa = "June " + Date_Year + " - May " + Date_Year1;
+	}
+	else if(Date_Month == 7)
+	{
+		aa = "July " + Date_Year + " - June " + Date_Year1;
+	}
+	else if(Date_Month == 8)
+	{
+		aa = "August " + Date_Year + " - July " + Date_Year1;
+	}
+	else if(Date_Month == 9)
+	{
+		aa = "September " + Date_Year + " - August " + Date_Year1;
+	}
+	else if(Date_Month == 10)
+	{
+		aa = "October " + Date_Year + " - September " + Date_Year1;
+	}
+	else if(Date_Month == 11)
+	{
+		aa = "November " + Date_Year + " - October " + Date_Year1;
+	}
+	else if(Date_Month == 12)
+	{
+		aa = "December " + Date_Year + " - November " + Date_Year1;
+	}
+	Particular_Name = "Payable as Subscription fee to IMA India's Business information service entitled 'The India " + Product_Family + " Forum' from " + aa;
+}
+Particular_Name = zoho.crm.getRecordById("Products",prod);
+est.put("Particular_Name",Particular_Name);
+else if(Type_Product == "Workshops" || Type_Product == "Roundtables" || Type_Product == "Conferences")
+{
+	// 	Name = Conferences_Projects[ID == ID];
+	// 	input.Particular_Name = Name.Product_Name;
+}
+else if(Type_Product == "Executive briefings" || Type_Product == "consulting" || Type_Product == "Report sales" || Type_Product == "R & A")
+{
+	// 	Name = Conferences_Projects[ID = ID];
+	// 	input.Particular_Name = Name.Product_Name;
+}
+Total_Amount = "";
+Tax_Particulars = "";
+CGST = "";
+SGST = "";
+Amount = 0;
+Mailing_State1 = Contact.get("Mailing_State1");
+if(Mailing_State1 != Account.get("Region"))
+{
+	Total_Amount = Amount * 1.18;
+	Tax_Particulars = "<div>CGST @ 9% <br /></div><div>SGST @ 9%<br /></div><div>IGST @ 18%<br /></div><div>(GSTIN - 06AAACI1610D1ZE)<br /></div><div>(PAN - AAACI1610D)<br /></div><div>(SAC - 999599)<br /></div>";
+	IGST = Amount * .18;
+}
+else
+{
+	Total_Amount = Amount * 1.18;
+	Tax_Particulars = "<div>CGST @ 9% <br /></div><div>SGST @ 9%<br /></div><div>IGST @ 18%<br /></div><div>(GSTIN - 06AAACI1610D1ZE)<br /></div><div>(PAN - AAACI1610D)<br /></div><div>(SAC - 999599)<br /></div>";
+	CGST = Amount * .9;
+	SGST = Amount * .9;
+}
+// est.put("Total_Amount_in_Words", );
+est.put("CGST",CGST);
+est.put("SGST",SGST);
+est.put("IGST",IGST);
+est.put("Amount",Amount);
+est.put("Total_Amount",Total_Amount);
+// est.put("Foot_Note", );//Arsh work
+// 
+est.put("Billed_From",Billed_From);
+est.put("Contact_Address.Address_Line_2",Contact.get("Mailing_Street"));
+est.put("Contact_Address.City_District",Contact.get("Mailing_City1"));
+est.put("Contact_Address.State_Province",Contact.get("Mailing_State1"));
+est.put("Contact_Address.Postal_Code",Contact.get("Mailing_Zip"));
+est.put("Services",Deal.get("Type_Product"));
+est.put("Service_Type",Deal.get("Product"));
+est.put("Subscription Period","Yearly");
+if(Type_Product == "Renewal")
+{
+	est.put("Subscription Type","Renewal");
+}
+else if(Type_Product == "Subscription")
+{
+	est.put("Subscription Type","New Membership");
+}
+upd=zohoupdate("app",estimate,mp,"zoho-creator");
+info upd;
+

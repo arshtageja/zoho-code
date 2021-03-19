@@ -1,0 +1,59 @@
+acc_del = zoho.crm.getRecordById("Accounts",idf);
+info acc_del;
+est = Map();
+est.put("Industry",ifnull(acc_del.getJSON("Industry"),""));
+est.put("Organizational_Tax_Structure",ifnull(acc_del.getJSON("Organizational_Tax_Structure"),""));
+est.put("Business_Phone",ifnull(acc_del.getJSON("Business_Phone"),""));
+est.put("Shipping_Address",ifnull(acc_del.getJSON("Business_Address"),""));
+est.put("Shipping_Address_2",ifnull(acc_del.getJSON("Business_Address_2"),""));
+est.put("Shipping_City",ifnull(acc_del.getJSON("Business_City"),""));
+est.put("Shipping_State1",ifnull(acc_del.getJSON("Business_State"),""));
+est.put("Shipping_Zip",ifnull(acc_del.getJSON("Business_Zip"),""));
+est.put("EIN",ifnull(acc_del.getJSON("EIN"),""));
+est.put("Organization_Date",ifnull(acc_del.getJSON("Organization_Date"),""));
+est.put("How_did_you_hear_about_us",ifnull(acc_del.getJSON("How_did_you_hear_about_us"),""));
+est.put("How_much_capital_will_you_need",ifnull(acc_del.getJSON("How_much_capital_will_you_need"),""));
+est.put("Other_How_did_you_hear_about_us",ifnull(acc_del.getJSON("Other_How_did_you_hear_about_us"),""));
+est.put("Use_of_Funds",ifnull(acc_del.getJSON("Use_of_Funds"),""));
+loan_del = zoho.crm.getRelatedRecords("Deals","Accounts",idf);
+if(loan_del.isEmpty() == false)
+{
+	for each  i in loan_del
+	{
+		id = i.getJSON("id");
+		upd = zoho.crm.updateRecord("Deals",id,est);
+		info upd;
+	}
+}
+// upd=zoho.crm.updateRecord("Deals", id, est);
+// info upd;
+
+
+
+
+
+
+deal_del = zoho.crm.getRecordById("Deals",idf);
+info deal_del;
+est = Map();
+est.put("Industry",ifnull(deal_del.getJSON("Industry"),""));
+est.put("Organizational_Tax_Structure",ifnull(deal_del.getJSON("Organizational_Tax_Structure"),""));
+est.put("Business_Phone",ifnull(deal_del.getJSON("Business_Phone"),""));
+est.put("Business_Address",ifnull(deal_del.getJSON("Shipping_Address"),""));
+est.put("Business_Address_2",ifnull(deal_del.getJSON("Shipping_Address_2"),""));
+est.put("Business_City",ifnull(deal_del.getJSON("Shipping_City"),""));
+est.put("Business_State",ifnull(deal_del.getJSON("Shipping_State1"),""));
+est.put("Business_Zip",ifnull(deal_del.getJSON("Shipping_Zip"),""));
+est.put("EIN",ifnull(deal_del.getJSON("EIN"),""));
+est.put("Organization_Date",ifnull(deal_del.getJSON("Organization_Date"),""));
+est.put("How_did_you_hear_about_us",ifnull(deal_del.getJSON("How_did_you_hear_about_us"),""));
+est.put("How_much_capital_will_you_need",ifnull(deal_del.getJSON("How_much_capital_will_you_need"),""));
+est.put("Other_How_did_you_hear_about_us",ifnull(deal_del.getJSON("Other_How_did_you_hear_about_us"),""));
+est.put("Use_of_Funds",ifnull(deal_del.getJSON("Use_of_Funds"),""));
+
+acc_id=deal_del.getJSON("Account_Name").get("id");
+if(acc_id!=null)
+{
+	upd = zoho.crm.updateRecord("Accounts",acc_id,est);
+		info upd;
+}
